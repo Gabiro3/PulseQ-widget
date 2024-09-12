@@ -20,22 +20,16 @@ export const Widget = ({ projectId }) => {
   const submit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    
-    // Destructure form values and rating
-    const p_project_id = projectId;
-    const p_user_name = form.name.value;
-    const p_user_email = form.email.value;
-    const p_message = form.feedback.value;
-    const p_rating = rating;
-  
+
     // Call the Supabase RPC function with named parameters
     const { data, error } = await supabase.rpc('add_feedback', {
-      p_project_id, // First parameter: p_project_id
-      p_user_name,  // Second parameter: p_user_name
-      p_user_email, // Third parameter: p_user_email
-      p_message,    // Fourth parameter: p_message
-      p_rating      // Fifth parameter: p_rating
+      p_project_id: projectId,  // Pass parameters in the correct order
+      p_user_name: form.name.value,
+      p_user_email: form.email.value,
+      p_message: form.feedback.value,
+      p_rating: rating
     });
+    
   
     // Handle the result
     if (error) {
