@@ -21,8 +21,8 @@ export const Widget = ({ projectId }) => {
     e.preventDefault();
     const form = e.target;
   
-    // Construct the data based on the form input and state
-    const data = [
+    // Prepare parameters in the correct order
+    const params = [
       projectId,                // p_project_id
       form.name.value,          // p_user_name
       form.email.value,         // p_user_email
@@ -30,9 +30,9 @@ export const Widget = ({ projectId }) => {
       rating                    // p_rating
     ];
   
-    // Call the stored procedure with parameters in the correct order
-    const { data: returnedData, error } = await supabase.rpc("add_feedback", data);
-    
+    // Call the RPC function
+    const { data: returnedData, error } = await supabase.rpc("add_feedback", params);
+  
     if (error) {
       console.error("Error submitting feedback:", error);
     } else {
