@@ -20,21 +20,19 @@ export const Widget = ({ projectId }) => {
   const submit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const data = {
-      p_project_id: projectId,
-      p_user_name: form.name.value,
-      p_user_email: form.email.value,
-      p_message: form.feedback.value,
-      p_rating: rating
-    };
-    const { data: returnedData, error } = await supabase.rpc("add_feedback", {
-      p_project_id: data.p_project_id,
-      p_user_name: data.p_user_name,
-      p_user_email: data.p_user_email,
-      p_message: data.p_message,
-      p_rating: data.p_rating
-    });
   
+    // Construct the data based on the form input and state
+    const data = [
+      projectId,                // p_project_id
+      form.name.value,          // p_user_name
+      form.email.value,         // p_user_email
+      form.feedback.value,      // p_message
+      rating                    // p_rating
+    ];
+  
+    // Call the stored procedure with parameters in the correct order
+    const { data: returnedData, error } = await supabase.rpc("add_feedback", data);
+    
     if (error) {
       console.error("Error submitting feedback:", error);
     } else {
@@ -42,6 +40,7 @@ export const Widget = ({ projectId }) => {
       console.log("Feedback submitted successfully:", returnedData);
     }
   };
+  
   
 
   return (
