@@ -29,7 +29,7 @@ export const Widget = ({ projectId }) => {
     const p_rating = rating;
   
     // Call the Supabase RPC function with named parameters
-    const { data: returnedData, error } = await supabase
+    const { data, error } = await supabase
     .rpc('add_feedback', {
       p_message, 
       p_project_id, 
@@ -43,7 +43,7 @@ export const Widget = ({ projectId }) => {
       console.error("Error submitting feedback:", error);
     } else {
       setSubmitted(true);
-      console.log("Feedback submitted successfully:", returnedData);
+      console.log("Feedback submitted successfully:", data);
     }
   };
   
