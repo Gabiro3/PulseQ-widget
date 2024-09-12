@@ -27,10 +27,22 @@ export const Widget = ({ projectId }) => {
       p_message: form.feedback.value,
       p_rating: rating
     };
-    const { data: returnedData, error } = await supabase.rpc("add_feedback", data);
-    setSubmitted(true);
-    console.log(returnedData);
+    const { data: returnedData, error } = await supabase.rpc("add_feedback", {
+      p_project_id: data.p_project_id,
+      p_user_name: data.p_user_name,
+      p_user_email: data.p_user_email,
+      p_message: data.p_message,
+      p_rating: data.p_rating
+    });
+  
+    if (error) {
+      console.error("Error submitting feedback:", error);
+    } else {
+      setSubmitted(true);
+      console.log("Feedback submitted successfully:", returnedData);
+    }
   };
+  
 
   return (
     <>
