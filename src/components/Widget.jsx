@@ -21,13 +21,13 @@ export const Widget = ({ projectId }) => {
     e.preventDefault();
     const form = e.target;
     const data = {
-      p_project_id: projectId,
-      p_user_name: form.name.value,
-      p_user_email: form.email.value,
       p_message: form.feedback.value,
+      p_project_id: projectId,
       p_rating: rating,
+      p_user_email: form.email.value,
+      p_user_name: form.name.value
     };
-    const { data: returnedData } = await supabase.rpc("add_feedback", data);
+    const { data: returnedData, error } = await supabase.rpc("add_feedback", data);
     setSubmitted(true);
     console.log(returnedData);
   };
@@ -90,9 +90,8 @@ export const Widget = ({ projectId }) => {
                       {[...Array(5)].map((_, index) => (
                         <StarIcon
                           key={index}
-                          className={`h-5 w-5 cursor-pointer ${
-                            rating > index ? "fill-primary" : "fill-muted stroke-muted-foreground"
-                          }`}
+                          className={`h-5 w-5 cursor-pointer ${rating > index ? "fill-primary" : "fill-muted stroke-muted-foreground"
+                            }`}
                           onClick={() => onSelectStar(index)}
                         />
                       ))}
