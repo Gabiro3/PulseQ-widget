@@ -29,13 +29,12 @@ export const Widget = ({ projectId }) => {
     const p_rating = rating;
   
     // Call the Supabase RPC function with named parameters
-    const { data, error } = await supabase
-    .rpc('add_feedback', {
-      p_message, 
-      p_project_id, 
-      p_rating, 
-      p_user_email, 
-      p_user_name
+    const { data, error } = await supabase.rpc('add_feedback', {
+      p_project_id, // First parameter: p_project_id
+      p_user_name,  // Second parameter: p_user_name
+      p_user_email, // Third parameter: p_user_email
+      p_message,    // Fourth parameter: p_message
+      p_rating      // Fifth parameter: p_rating
     });
   
     // Handle the result
